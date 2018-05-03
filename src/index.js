@@ -27,6 +27,9 @@ class Board extends React.Component {
 
   handleClick(i) {
     const sqrs = this.state.squares.slice(); // no start and end, so copy the whole
+    if (calculateWinner(sqrs) || sqrs[i]) {
+      return;
+    }
     sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
     this.setState({
       squares: sqrs,
@@ -44,11 +47,17 @@ class Board extends React.Component {
   }
 
   render() {
-    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    const w = calculateWinner(this.state.squares);
+    let brdStatus;
+    if (w) {
+      brdStatus = 'Winner: ' + w;
+    } else {
+      brdStatus = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
 
     return (
       <div>
-        <div className="status">{status}</div>
+        <div className="status">{brdStatus}</div>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -83,6 +92,27 @@ class Game extends React.Component {
       </div>
     );
   }
+}
+
+function calculateWinner(squares) {
+  const lines = [ // exaughst list of all possible 3-in-a-row winning cases
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    const tmp = squares[a];
+    if (tmp && tmp === squares[b] && tmp === squares[c]) {
+      return tmp;
+    }
+  }
+  return null;
 }
 
 // ========================================
