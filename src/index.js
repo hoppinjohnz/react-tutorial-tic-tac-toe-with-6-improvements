@@ -56,13 +56,17 @@ class Game extends React.Component {
       history: [
         {squares: Array(9).fill(null)},
       ],
+      stepNumber: 0,
       xIsNext: true,
     };
   }
 
   handleClick(i) {
-    const history = this.state.history;
-    const current = history[history.length - 1];
+    // to be aware of stepNumber when reading the current board state 
+    // so that you can go back in time then click in the board to create a new entry
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    // to read from that step in the history
+    const current = history[this.state.stepNumber];
     const sqrs = current.squares.slice(); // no start and end, so copy the whole
     if (calculateWinner(sqrs) || sqrs[i]) {
       return;
@@ -74,7 +78,15 @@ class Game extends React.Component {
           {squares: sqrs},
         ],
       ),
+      stepNumber: history.length,
       xIsNext: !this.state.xIsNext, // toggle btw X and O
+    });
+  }
+
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      xIsNext: (step % 2) === 0, // even step == true
     });
   }
 
