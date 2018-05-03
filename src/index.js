@@ -2,21 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Square extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      v: null,
-    }
-  }
-
-  render() {
-    return (
-      <button className="square" onClick={() => this.props.clicked()}>
-        {this.props.v}
-      </button>
-    );
-  }
+/** React supports a simpler syntax called functional components 
+ * for component types like Square that only consist of a render method. 
+ * Rather than define a class extending React.Component, we simply write 
+ * a function that takes props and returns what should be rendered.*/
+function Square(props) {
+  return (
+    // Note that onClick={props.onClick()} would not work 
+    // because it would call props.onClick immediately instead of passing it down.
+    <button className="square" onClick={props.clicked}>
+      {props.v}
+    </button>
+  );
 }
 
 class Board extends React.Component {
@@ -28,7 +25,7 @@ class Board extends React.Component {
   }
 
   handleClick(i) {
-    const sqrs = this.state.squares.slice();
+    const sqrs = this.state.squares.slice(); // no start and end, so copy the whole
     sqrs[i] = 'X';
     this.setState({squares: sqrs});
   }
