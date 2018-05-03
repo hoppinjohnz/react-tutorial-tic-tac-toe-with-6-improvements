@@ -68,7 +68,7 @@ class Game extends React.Component {
     // to read from that step in the history
     const current = history[this.state.stepNumber];
     const sqrs = current.squares.slice(); // no start and end, so copy the whole
-    if (calculateWinner(sqrs) || sqrs[i]) {
+    if (gameWon(sqrs) || sqrs[i]) {
       return;
     }
     sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
@@ -93,7 +93,7 @@ class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[history.length - 1];
-    const winner = calculateWinner(current.squares);
+    const winner = gameWon(current.squares);
 
     // For each step in the history, we create a list item <li> 
     // with a button <button> inside it that has a click handler.
@@ -130,7 +130,7 @@ class Game extends React.Component {
   }
 }
 
-function calculateWinner(squares) {
+function gameWon(squares) {
   const lines = [ // exaughst list of all possible 3-in-a-row winning cases
     [0, 1, 2],
     [3, 4, 5],
@@ -145,10 +145,10 @@ function calculateWinner(squares) {
     const [a, b, c] = lines[i];
     const tmp = squares[a];
     if (tmp && tmp === squares[b] && tmp === squares[c]) {
-      return tmp;
+      return tmp; // winning
     }
   }
-  return null;
+  return null; // not winning yet
 }
 
 // ========================================
