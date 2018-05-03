@@ -64,21 +64,21 @@ class Game extends React.Component {
   handleClick(i) {
     // to be aware of stepNumber when reading the current board state 
     // so that you can go back in time then click in the board to create a new entry
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const hstr = this.state.history.slice(0, this.state.stepNumber + 1);
     // to read from that step in the history
-    const current = history[this.state.stepNumber];
-    const sqrs = current.squares.slice(); // no start and end, so copy the whole
+    const crrt = hstr[this.state.stepNumber];
+    const sqrs = crrt.squares.slice(); // no start and end, so copy the whole
     if (gameWon(sqrs) || sqrs[i]) {
       return;
     }
     sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
     this.setState({
-      history: history.concat( // trailing commas allowed
+      history: hstr.concat( // trailing commas allowed
         [
           {squares: sqrs},
         ],
       ),
-      stepNumber: history.length,
+      stepNumber: hstr.length,
       xIsNext: !this.state.xIsNext, // toggle btw X and O
     });
   }
@@ -91,13 +91,13 @@ class Game extends React.Component {
   }
 
   render() {
-    const history = this.state.history;
-    const current = history[history.length - 1];
-    const winner = gameWon(current.squares);
+    const hstry = this.state.history;
+    const currt = hstry[hstry.length - 1];
+    const w = gameWon(currt.squares);
 
     // For each step in the history, we create a list item <li> 
     // with a button <button> inside it that has a click handler.
-    const moves = history.map((step, move) => {
+    const moves = hstry.map((step, move) => {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
       return (
         <li key={move}>
@@ -107,8 +107,8 @@ class Game extends React.Component {
     });
 
     let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
+    if (w) {
+      status = 'Winner: ' + w;
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
@@ -117,7 +117,7 @@ class Game extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board
-            squares={current.squares}
+            squares={currt.squares}
             onClick={(i) => this.handleClick(i)}
           />
         </div>
