@@ -9,18 +9,37 @@ class Square extends React.Component {
       v: null,
     }
   }
+
   render() {
     return (
-      <button className="square" onClick={() => this.setState({v: this.props.v})}>
-        {this.state.v}
+      <button className="square" onClick={() => this.props.clicked()}>
+        {this.props.v}
       </button>
     );
   }
 }
 
 class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
+
+  handleClick(i) {
+    const sqrs = this.state.squares.slice();
+    sqrs[i] = 'X';
+    this.setState({squares: sqrs});
+  }
+
   renderSquare(i) {
-    return <Square v={i}/>;
+    return (
+      <Square
+        v={this.state.squares[i]}
+        clicked={() => this.handleClick(i)}
+      />
+    );
   }
 
   render() {
