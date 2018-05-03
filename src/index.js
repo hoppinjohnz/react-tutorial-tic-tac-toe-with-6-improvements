@@ -21,13 +21,17 @@ class Board extends React.Component {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
+      xIsNext: true,
     };
   }
 
   handleClick(i) {
     const sqrs = this.state.squares.slice(); // no start and end, so copy the whole
-    sqrs[i] = 'X';
-    this.setState({squares: sqrs});
+    sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
+    this.setState({
+      squares: sqrs,
+      xIsNext: !this.state.xIsNext, // toggle btw X and O
+    });
   }
 
   renderSquare(i) {
@@ -40,7 +44,7 @@ class Board extends React.Component {
   }
 
   render() {
-    const status = 'Next player: X';
+    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
     return (
       <div>
