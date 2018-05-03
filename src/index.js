@@ -17,47 +17,18 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      squares: Array(9).fill(null),
-      xIsNext: true,
-    };
-  }
-
-  handleClick(i) {
-    const sqrs = this.state.squares.slice(); // no start and end, so copy the whole
-    if (calculateWinner(sqrs) || sqrs[i]) {
-      return;
-    }
-    sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
-    this.setState({
-      squares: sqrs,
-      xIsNext: !this.state.xIsNext, // toggle btw X and O
-    });
-  }
-
   renderSquare(i) {
     return (
       <Square
-        v={this.state.squares[i]}
-        clicked={() => this.handleClick(i)}
+        v={this.props.squares[i]}
+        clicked={() => this.props.onClick(i)}
       />
     );
   }
 
   render() {
-    const w = calculateWinner(this.state.squares);
-    let brdStatus;
-    if (w) {
-      brdStatus = 'Winner: ' + w;
-    } else {
-      brdStatus = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
     return (
       <div>
-        <div className="status">{brdStatus}</div>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -79,14 +50,56 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      history: [
+        {squares: Array(9).fill(null)},
+      ],
+      xIsNext: true,
+    };
+  }
+
+  handleClick(i) {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const sqrs = current.squares.slice(); // no start and end, so copy the whole
+    if (calculateWinner(sqrs) || sqrs[i]) {
+      return;
+    }
+    sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
+    this.setState({
+      history: history.concat( // trailing commas allowed
+        [
+          {squares: sqrs},
+        ],
+      ),
+      xIsNext: !this.state.xIsNext, // toggle btw X and O
+    });
+  }
+
   render() {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const winner = calculateWinner(current.squares);
+
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board
+            squares={current.squares}
+            onClick={(i) => this.handleClick(i)}
+          />
         </div>
         <div className="game-info">
-          <div>{/* status */}</div>
+          <div>{status}</div>
           <ol>{/* TODO */}</ol>
         </div>
       </div>
