@@ -85,27 +85,37 @@ class Game extends React.Component {
     });
   }
 
-  jumpTo(step) {
+  jumpTo(i) {
+    console.log(i);
     this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0, // even step == true
+      stepNumber: i,
+      xIsNext: (i % 2) === 0, // even i == true
     });
   }
 
   render() {
     const hstry = this.state.history;
-    const currt = hstry[hstry.length - 1];
+    const cIndex = hstry.length - 1;
+    const currt = hstry[cIndex];
 
     // For each step in the history, we create a list item <li> 
     // with a button <button> inside it which has a click handler.
     const moves = hstry.map((step, i) => { // (step, index) such as hstry[index] = step
       const desc = i ? 'Go to move #' + i : 'Go to game start'; // when i = 0, go to game start
       const lctn = i ? '(' + row(step.cell) + ', ' + col(step.cell) + ')' : null;
-      return (
-        <li key={i}>
-          <button onClick={() => this.jumpTo(i)}>{desc}</button> {lctn}
-        </li>
-      );
+      if (i == this.state.stepNumber) {
+        return (
+          <li key={i}>
+            <button onClick={() => this.jumpTo(i)}> >> {desc}</button> {lctn}
+          </li>
+        );
+      } else {
+        return (
+          <li key={i}>
+            <button onClick={() => this.jumpTo(i)}>{desc}</button> {lctn}
+          </li>
+        );
+      }
     });
 
     const w = gameWon(currt.squares);
