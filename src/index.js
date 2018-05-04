@@ -28,21 +28,20 @@ class Board extends React.Component {
     );
   }
 
-  row(columns) {
-    const cols = columns.slice();
+  row(cells) {
+    const cols = cells.slice();
     return (
-      <div className="board-row">
+      <div key={cells} className="board-row">
         {cols.map((i) => this.renderSquare(i))}
       </div>
     );
   }
 
   render() {
+    const cols = [0,1,2,];
     return (
       <div>
-        {this.row([0,1,2])}
-        {this.row([3,4,5])}
-        {this.row([6,7,8])}
+        {cols.map((i) => this.row([3*i, 3*i+1, 3*i+2,]))}
       </div>
     );
   }
