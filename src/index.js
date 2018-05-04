@@ -100,9 +100,10 @@ class Game extends React.Component {
     // with a button <button> inside it which has a click handler.
     const moves = hstry.map((step, i) => { // (step, index) such as hstry[index] = step
       const desc = i ? 'Go to move #' + i : 'Go to game start'; // when i = 0, go to game start
+      const lctn = i ? '(' + row(step.cell) + ', ' + col(step.cell) + ')' : null;
       return (
         <li key={i}>
-          <button onClick={() => this.jumpTo(i)}>{desc}</button> {step.cell}
+          <button onClick={() => this.jumpTo(i)}>{desc}</button> {lctn}
         </li>
       );
     });
@@ -130,6 +131,52 @@ class Game extends React.Component {
       </div>
     );
   }
+}
+
+function row(cell) {
+  let r = null;
+  switch (cell) {
+    case 0:
+    case 1:
+    case 2:
+      r = 0;
+      break;
+    case 3:
+    case 4:
+    case 5:
+      r = 1;
+      break;
+    case 6:
+    case 7:
+    case 8:
+      r = 2;
+      break;
+    default:
+  }
+  return r;
+}
+
+function col(cell) {
+  let c = null;
+  switch (cell) {
+    case 0:
+    case 3:
+    case 6:
+      c = 0;
+      break;
+    case 1:
+    case 4:
+    case 7:
+      c = 1;
+      break;
+    case 2:
+    case 5:
+    case 8:
+      c = 2;
+      break;
+    default:
+  }
+  return c;
 }
 
 function gameWon(squares) {
