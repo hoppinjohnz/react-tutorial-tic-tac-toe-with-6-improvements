@@ -101,21 +101,14 @@ class Game extends React.Component {
     // For each step in the history, we create a list item <li> 
     // with a button <button> inside it which has a click handler.
     const moves = hstry.map((step, i) => { // (step, index) such as hstry[index] = step
-      const desc = i ? 'Go to move #' + i : 'Go to game start'; // when i = 0, go to game start
-      const lctn = i ? '(' + row(step.cell) + ', ' + col(step.cell) + ')' : null;
-      if (i == this.state.stepNumber) {
-        return (
-          <li key={i}>
-            <button onClick={() => this.jumpTo(i)}> >> {desc}</button> {lctn}
-          </li>
-        );
-      } else {
-        return (
-          <li key={i}>
-            <button onClick={() => this.jumpTo(i)}>{desc}</button> {lctn}
-          </li>
-        );
-      }
+      const desc = i ? 'Move #' + i : 'Start'; // when i = 0, go to game start
+      const descMarked = (i === this.state.stepNumber) ? '>> ' + desc : desc;
+      const rowCol = i ? '(' + row(step.cell) + ', ' + col(step.cell) + ')' : null;
+      return (
+        <li key={i}>
+          <button onClick={() => this.jumpTo(i)}>{descMarked}</button> {rowCol}
+        </li>
+      );
     });
 
     const w = gameWon(currt.squares);
