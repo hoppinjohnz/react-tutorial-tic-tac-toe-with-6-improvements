@@ -16,6 +16,7 @@ function Square(props) {
   );
 }
 
+
 class Board extends React.Component {
   renderSquare(i) {
     return (
@@ -49,12 +50,13 @@ class Board extends React.Component {
   }
 }
 
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       history: [
-        {squares: Array(9).fill(null)},
+        {squares: Array(9).fill(null), cell: null},
       ],
       stepNumber: 0,
       xIsNext: true,
@@ -75,7 +77,7 @@ class Game extends React.Component {
     this.setState({
       history: hstr.concat( // trailing commas allowed
         [
-          {squares: sqrs},
+          {squares: sqrs, cell: i},
         ],
       ),
       stepNumber: hstr.length,
@@ -93,19 +95,19 @@ class Game extends React.Component {
   render() {
     const hstry = this.state.history;
     const currt = hstry[hstry.length - 1];
-    const w = gameWon(currt.squares);
 
     // For each step in the history, we create a list item <li> 
-    // with a button <button> inside it that has a click handler.
-    const moves = hstry.map((step, move) => {
-      const desc = move ? 'Go to move #' + move : 'Go to game start';
+    // with a button <button> inside it which has a click handler.
+    const moves = hstry.map((step, i) => { // (step, index) such as hstry[index] = step
+      const desc = i ? 'Go to move #' + i : 'Go to game start'; // when i = 0, go to game start
       return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+        <li key={i}>
+          <button onClick={() => this.jumpTo(i)}>{desc}</button> {step.cell}
         </li>
       );
     });
 
+    const w = gameWon(currt.squares);
     let status;
     if (w) {
       status = 'Winner: ' + w;
