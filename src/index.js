@@ -21,30 +21,28 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
       <Square
+        key={i}
         v={this.props.squares[i]}
         clicked={() => this.props.onClick(i)}
       />
     );
   }
 
+  row(columns) {
+    const cols = columns.slice();
+    return (
+      <div className="board-row">
+        {cols.map((i) => this.renderSquare(i))}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+        {this.row([0,1,2])}
+        {this.row([3,4,5])}
+        {this.row([6,7,8])}
       </div>
     );
   }
@@ -103,7 +101,7 @@ class Game extends React.Component {
     const moves = hstry.map((step, i) => { // (step, index) such as hstry[index] = step
       const desc = i ? 'Move #' + i : 'Start'; // when i = 0, go to game start
       const descMarked = (i === this.state.stepNumber) ? '>> ' + desc : desc;
-      const rowCol = i ? '(' + row(step.cell) + ', ' + col(step.cell) + ')' : null;
+      const rowCol = i ? '(' + rowNum(step.cell) + ', ' + colNum(step.cell) + ')' : null;
       return (
         <li key={i}>
           <button onClick={() => this.jumpTo(i)}>{descMarked}</button> {rowCol}
@@ -136,7 +134,7 @@ class Game extends React.Component {
   }
 }
 
-function row(cell) {
+function rowNum(cell) {
   let r = null;
   switch (cell) {
     case 0:
@@ -159,7 +157,7 @@ function row(cell) {
   return r;
 }
 
-function col(cell) {
+function colNum(cell) {
   let c = null;
   switch (cell) {
     case 0:
