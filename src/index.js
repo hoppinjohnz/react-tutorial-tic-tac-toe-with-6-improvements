@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Toggle from 'react-toggle';
 
 /** React supports a simpler syntax called functional components 
  * for component types like Square that only consist of a render method. 
@@ -121,6 +122,10 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+            <Toggle
+              defaultChecked={this.state.baconIsReady}
+              onChange={this.handleBaconChange} />
+            <span>Sort</span>
           <ol>{moves}</ol>
         </div>
       </div>
