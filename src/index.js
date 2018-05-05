@@ -70,7 +70,11 @@ class Game extends React.Component {
     // to read from that step in the history
     const crrt = hstr[this.state.stepNumber];
     const sqrs = crrt.squares.slice(); // no start and end, so copy the whole
-    if (gameWon(sqrs) || sqrs[i]) {
+    if (sqrs[i]) { // cell is already taken
+      return;
+    }
+    if (gameWon(sqrs)) {
+      // highlight the winning line
       return;
     }
     sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
@@ -125,7 +129,7 @@ class Game extends React.Component {
     }
 
     const w = gameWon(currt.squares);
-    let status = w ? 'Winner: ' + w : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    let status = w ? 'Winner: ' + w[0] : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
     return (
       <div className="game">
@@ -206,7 +210,7 @@ function gameWon(squares) {
     const [a, b, c] = lines[i];
     const tmp = squares[a];
     if (tmp && tmp === squares[b] && tmp === squares[c]) {
-      return tmp; // winning
+      return [tmp, a, b, c]; // winning
     }
   }
   return null; // not winning yet
