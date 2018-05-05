@@ -108,7 +108,7 @@ class Game extends React.Component {
     // with a button <button> inside it which has a click handler.
     const moves = hstry.map((step, i) => { // (step, index) such as hstry[index] = step
       const desc = i ? 'Move #' + i : 'Start'; // when i = 0, go to game start
-      const descMarked = (i === this.state.stepNumber) ? '>> ' + desc : desc;
+      const descMarked = (i === this.state.stepNumber) ? '=> ' + desc : desc;
       const rowCol = i ? '(' + rowNum(step.cell) + ', ' + colNum(step.cell) + ')' : null;
       return (
         <li key={i}>
