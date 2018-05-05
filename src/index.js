@@ -129,7 +129,12 @@ class Game extends React.Component {
     }
 
     const w = gameWon(currt.squares);
-    let status = w ? 'Winner: ' + w[0] : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    let status;
+    if (gameDraw(currt.squares)) {
+      status = 'Good play. It\'s a draw!';
+    } else {
+      status = w ? 'Winner: ' + w[0] : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
 
     return (
       <div className="game">
@@ -214,6 +219,20 @@ function gameWon(squares) {
     }
   }
   return null; // not winning yet
+}
+
+function gameDraw(squares) {
+  let draw = true;
+  if (gameWon(squares)) {
+    draw = false;
+  } else {
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i] === null) {
+        draw = false;
+      }
+    }
+  }
+  return draw;
 }
 
 // ========================================
