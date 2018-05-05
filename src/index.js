@@ -57,14 +57,13 @@ class Game extends React.Component {
       ],
       stepNumber: 0,
       xIsNext: true,
-      sortAsc: true,
-      movesList: [],
+      isAsc: true,
     };
     // removed "TypeError: Cannot read property 'setState' of undefined"
     this.handleSort = this.handleSort.bind(this);
   }
 
-  handleClick(i, moves) {
+  handleClick(i) {
     // to be aware of stepNumber when reading the current board state 
     // so that you can go back in time then click in the board to create a new entry
     const hstr = this.state.history.slice(0, this.state.stepNumber + 1);
@@ -83,7 +82,6 @@ class Game extends React.Component {
       ),
       stepNumber: hstr.length,
       xIsNext: !this.state.xIsNext, // toggle btw X and O
-      movesList: moves,
     });
   }
 
@@ -95,21 +93,9 @@ class Game extends React.Component {
     });
   }
 
-  // need to preserve history[0] and only sort the rest of history
-  // also need to put all state into the array so that sort to work on them all
   handleSort() {
-    const firstE = this.state.movesList.slice(0, 1);
-    const theRest = this.state.movesList.slice(1, this.state.movesList.length);
-    let sortedMoves = [];
-    if (this.state.sortAsc) {
-      // copy your state.data to a new array and sort it by itemM in ascending order and then map 
-      sortedMoves = theRest.sort((a, b) => a.key < b.key);
-    } else {
-      sortedMoves = theRest.sort((a, b) => a.key > b.key);
-    }
     this.setState({
-      movesList: [].concat(firstE, sortedMoves),
-      sortAsc: !this.state.sortAsc,
+      isAsc: !this.state.isAsc,
     });
   }
 
@@ -131,6 +117,13 @@ class Game extends React.Component {
       );
     });
 
+    let sortedMoves;
+    if (!this.state.isAsc) {
+      sortedMoves = moves.sort((a, b) => a.key < b.key);
+    } else {
+      sortedMoves = moves.slice();
+    }
+
     const w = gameWon(currt.squares);
     let status = w ? 'Winner: ' + w : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
@@ -139,13 +132,13 @@ class Game extends React.Component {
         <div className="game-board">
           <Board
             squares={currt.squares}
-            onClick={(i) => this.handleClick(i, moves)}
+            onClick={(i) => this.handleClick(i)}
           />
         </div>
         <div className="game-info">
           <div>{status}</div>
           <button type="button" onClick={this.handleSort}> Sort </button>
-          <ol>{moves}</ol>
+          <ol>{sortedMoves}</ol>
         </div>
       </div>
     );
