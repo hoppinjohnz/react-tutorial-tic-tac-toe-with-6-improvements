@@ -118,10 +118,10 @@ class Game extends React.Component {
     });
 
     let sortedMoves;
-    if (!this.state.isAsc) {
-      sortedMoves = moves.sort((a, b) => a.key < b.key);
-    } else {
+    if (this.state.isAsc) {
       sortedMoves = moves.slice();
+    } else {
+      sortedMoves = moves.sort((a, b) => a.key < b.key); // descending sort
     }
 
     const w = gameWon(currt.squares);
