@@ -53,10 +53,11 @@ class Game extends React.Component {
     super(props);
     this.state = {
       history: [
-        {squares: Array(9).fill(null), cell: null},
+        {squares: Array(9).fill(null), cell: -1},
       ],
       stepNumber: 0,
       xIsNext: true,
+      sortIt: true,
     };
     // removed "TypeError: Cannot read property 'setState' of undefined"
     this.handleToggle = this.handleToggle.bind(this);
@@ -81,7 +82,6 @@ class Game extends React.Component {
       ),
       stepNumber: hstr.length,
       xIsNext: !this.state.xIsNext, // toggle btw X and O
-      sortToggle: false,
     });
   }
 
@@ -93,9 +93,20 @@ class Game extends React.Component {
     });
   }
 
+  // need to preserve history[0] and only sort the rest of history
   handleToggle() {
+    const firstE = this.state.history.slice(0, 1);
+    const theRest = this.state.history.slice(1, this.state.history.length);
+    let myData = [];
+    if (this.state.sortIt) {
+      // copy your state.data to a new array and sort it by itemM in ascending order and then map 
+      myData = theRest.sort((a, b) => a.cell > b.cell);
+    } else {
+      myData = theRest.sort((a, b) => a.cell < b.cell);
+    }
     this.setState({
-      sortToggle: !this.state.sortToggle
+      history: [].concat(firstE, myData),
+      sortIt: !this.state.sortIt,
     });
   }
 
@@ -139,7 +150,7 @@ class Game extends React.Component {
 }
 
 function rowNum(cell) {
-  let r = null;
+  let r = -1;
   switch (cell) {
     case 0:
     case 1:
@@ -162,7 +173,7 @@ function rowNum(cell) {
 }
 
 function colNum(cell) {
-  let c = null;
+  let c = -1;
   switch (cell) {
     case 0:
     case 3:
