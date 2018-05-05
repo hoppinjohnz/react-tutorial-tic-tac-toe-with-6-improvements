@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Toggle from 'react-toggle';
 
 /** React supports a simpler syntax called functional components 
  * for component types like Square that only consist of a render method. 
@@ -59,6 +58,8 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
     };
+    // removed "TypeError: Cannot read property 'setState' of undefined"
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   handleClick(i) {
@@ -80,6 +81,7 @@ class Game extends React.Component {
       ),
       stepNumber: hstr.length,
       xIsNext: !this.state.xIsNext, // toggle btw X and O
+      sortToggle: false,
     });
   }
 
@@ -88,6 +90,12 @@ class Game extends React.Component {
     this.setState({
       stepNumber: i,
       xIsNext: (i % 2) === 0, // even i == true
+    });
+  }
+
+  handleToggle() {
+    this.setState({
+      sortToggle: !this.state.sortToggle
     });
   }
 
@@ -122,10 +130,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-            <Toggle
-              defaultChecked={this.state.baconIsReady}
-              onChange={this.handleBaconChange} />
-            <span>Sort</span>
+          <button type="button" onClick={this.handleToggle}> Sort </button>
           <ol>{moves}</ol>
         </div>
       </div>
