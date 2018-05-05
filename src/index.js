@@ -99,16 +99,16 @@ class Game extends React.Component {
   // also need to put all state into the array so that sort to work on them all
   handleSort() {
     const firstE = this.state.movesList.slice(0, 1);
-    const tmpList = this.state.movesList.slice(1, this.state.movesList.length);
-    let myData = [];
+    const theRest = this.state.movesList.slice(1, this.state.movesList.length);
+    let sortedMoves = [];
     if (this.state.sortAsc) {
       // copy your state.data to a new array and sort it by itemM in ascending order and then map 
-      myData = tmpList.sort((a, b) => a.key < b.key);
+      sortedMoves = theRest.sort((a, b) => a.key < b.key);
     } else {
-      myData = tmpList.sort((a, b) => a.key > b.key);
+      sortedMoves = theRest.sort((a, b) => a.key > b.key);
     }
     this.setState({
-      movesList: [].concat(firstE, myData),
+      movesList: [].concat(firstE, sortedMoves),
       sortAsc: !this.state.sortAsc,
     });
   }
