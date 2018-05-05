@@ -10,7 +10,7 @@ function Square(props) {
   return (
     // Note that onClick={props.onClick()} would not work 
     // because it would call props.onClick immediately instead of passing it down.
-    <button className="square" onClick={props.clicked}>
+    <button className="square" onClick={props.clicked} style={{backgroundColor: props.bgColor}}>
       {props.v}
     </button>
   );
@@ -24,6 +24,7 @@ class Board extends React.Component {
         key={i}
         v={this.props.squares[i]}
         clicked={() => this.props.onClick(i)}
+        bgColor={this.props.bgColor}
       />
     );
   }
@@ -58,6 +59,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       isAsc: true,
+      bgColor: 'red',
     };
     // removed "TypeError: Cannot read property 'setState' of undefined"
     this.handleSort = this.handleSort.bind(this);
@@ -142,6 +144,7 @@ class Game extends React.Component {
           <Board
             squares={currt.squares}
             onClick={(i) => this.handleClick(i)}
+            bgColor={this.state.bgColor}
           />
         </div>
         <div className="game-info">
