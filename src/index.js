@@ -84,6 +84,7 @@ class Game extends React.Component {
       ),
       stepNumber: hstr.length,
       xIsNext: !this.state.xIsNext, // toggle btw X and O
+      bgColor: null,
     });
 
     // test for winning again after processing the current click
@@ -91,10 +92,6 @@ class Game extends React.Component {
       // highlight the winning line
       this.setState({
         bgColor: 'green',
-      });
-    } else {
-      this.setState({
-        bgColor: null,
       });
     }
   }
