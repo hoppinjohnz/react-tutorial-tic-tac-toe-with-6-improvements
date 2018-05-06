@@ -24,7 +24,7 @@ class Board extends React.Component {
         key={i}
         v={this.props.squares[i]}
         clicked={() => this.props.onClick(i)}
-        bgColor={this.props.bgColor}
+        bgColor={() => this.props.bgColor[i]}
       />
     );
   }
@@ -59,7 +59,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       isAsc: true,
-      bgColor: null,
+      bgColor: Array(9).fill('red'),
     };
     // removed "TypeError: Cannot read property 'setState' of undefined"
     this.handleSort = this.handleSort.bind(this);
@@ -88,12 +88,21 @@ class Game extends React.Component {
     });
 
     // test for winning again after processing the current click
-    if (gameWon(sqrs)) {
+    const w = gameWon(sqrs);
+    if (w) {
+      let a = Array(9).fill(null);
+      a[w[1]] = 'green';
+      a[w[2]] = 'green';
+      a[w[3]] = 'green';
       // highlight the winning line
       this.setState({
-        bgColor: 'green',
+        bgColor: a,
       });
+<<<<<<< 42025c74bfad7bac2bf71b8a10927b6ba6835548
     }
+=======
+    } 
+>>>>>>> not working, tried to tie coler to winning cells
   }
 
   jumpTo(i) {
@@ -149,7 +158,7 @@ class Game extends React.Component {
           <Board
             squares={currt.squares}
             onClick={(i) => this.handleClick(i)}
-            bgColor={this.state.bgColor}
+            bgColor={(i) => this.state.bgColor[i]}
           />
         </div>
         <div className="game-info">
