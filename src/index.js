@@ -59,7 +59,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       isAsc: true,
-      bgColor: 'red',
+      bgColor: null,
     };
     // removed "TypeError: Cannot read property 'setState' of undefined"
     this.handleSort = this.handleSort.bind(this);
@@ -72,11 +72,7 @@ class Game extends React.Component {
     // to read from that step in the history
     const crrt = hstr[this.state.stepNumber];
     const sqrs = crrt.squares.slice(); // no start and end, so copy the whole
-    if (sqrs[i]) { // cell is already taken
-      return;
-    }
-    if (gameWon(sqrs)) {
-      // highlight the winning line
+    if (sqrs[i] || gameWon(sqrs)) { // cell is already taken
       return;
     }
     sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
@@ -89,6 +85,18 @@ class Game extends React.Component {
       stepNumber: hstr.length,
       xIsNext: !this.state.xIsNext, // toggle btw X and O
     });
+
+    // test for winning again after processing the current click
+    if (gameWon(sqrs)) {
+      // highlight the winning line
+      this.setState({
+        bgColor: 'green',
+      });
+    } else {
+      this.setState({
+        bgColor: null,
+      });
+    }
   }
 
   jumpTo(i) {
