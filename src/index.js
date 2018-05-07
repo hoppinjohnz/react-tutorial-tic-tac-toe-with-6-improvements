@@ -98,11 +98,7 @@ class Game extends React.Component {
       this.setState({
         bgColor: a,
       });
-<<<<<<< 42025c74bfad7bac2bf71b8a10927b6ba6835548
     }
-=======
-    } 
->>>>>>> not working, tried to tie coler to winning cells
   }
 
   jumpTo(i) {
