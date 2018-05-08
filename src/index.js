@@ -8,9 +8,7 @@ import './index.css';
  * a function that takes props and returns what should be rendered.*/
 function Square(props) {
   return (
-    // Note that onClick={props.onClick()} would not work 
-    // because it would call props.onClick immediately instead of passing it down.
-    <button className="square" onClick={props.clicked} style={{backgroundColor: props.bgColor}}>
+    <button className="square" onClick={props.clicked} style={{ backgroundColor: props.bgcProp }}>
       {props.v}
     </button>
   );
@@ -24,7 +22,7 @@ class Board extends React.Component {
         key={i}
         v={this.props.squares[i]}
         clicked={() => this.props.onClick(i)}
-        bgColor={() => this.props.bgColor[i]}
+        bgcProp={this.props.bgColor[i]}
       />
     );
   }
@@ -59,7 +57,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       isAsc: true,
-      bgColor: Array(9).fill('red'),
+      bgColors: Array(9).fill('white'),
     };
     // removed "TypeError: Cannot read property 'setState' of undefined"
     this.handleSort = this.handleSort.bind(this);
@@ -84,19 +82,18 @@ class Game extends React.Component {
       ),
       stepNumber: hstr.length,
       xIsNext: !this.state.xIsNext, // toggle btw X and O
-      bgColor: null,
     });
 
-    // test for winning again after processing the current click
+    // only checking at the end of the handleClick
     const w = gameWon(sqrs);
     if (w) {
-      let a = Array(9).fill(null);
-      a[w[1]] = 'green';
-      a[w[2]] = 'green';
-      a[w[3]] = 'green';
-      // highlight the winning line
+      // highlight winning cells
+      const clrs = this.state.bgColors.slice();
+      clrs[w[1]] = 'lightblue';
+      clrs[w[2]] = 'lightblue';
+      clrs[w[3]] = 'lightblue';
       this.setState({
-        bgColor: a,
+        bgColors: clrs,
       });
     }
   }
@@ -154,7 +151,7 @@ class Game extends React.Component {
           <Board
             squares={currt.squares}
             onClick={(i) => this.handleClick(i)}
-            bgColor={(i) => this.state.bgColor[i]}
+            bgColor={this.state.bgColors}
           />
         </div>
         <div className="game-info">
@@ -214,7 +211,7 @@ function colNum(cell) {
 }
 
 function gameWon(squares) {
-  const lines = [ // exaughst list of all possible 3-in-a-row winning cases
+  const lines = [ // exhaust list of all possible 3-in-a-row winning cases
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
