@@ -11,7 +11,9 @@ In addition to the basic game instructed by the tutorial, this project implement
 
 In the project directory, run:
 
-### `npm start`
+```bash
+npm start
+```
 
 to start the app in the development mode.
 
