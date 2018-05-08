@@ -27,7 +27,7 @@ class Board extends React.Component {
     );
   }
 
-  row(cells) {
+  board_row(cells) {
     const cols = cells.slice();
     return (
       <div key={cells} className="board-row">
@@ -37,10 +37,10 @@ class Board extends React.Component {
   }
 
   render() {
-    const cols = [0,1,2,];
+    const row_index = [0,1,2,];
     return (
       <div>
-        {cols.map((i) => this.row([3*i, 3*i+1, 3*i+2,]))}
+        {row_index.map((i) => this.board_row([3*i, 3*i+1, 3*i+2,]))}
       </div>
     );
   }
