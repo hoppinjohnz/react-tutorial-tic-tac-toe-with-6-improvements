@@ -27,10 +27,13 @@ class Board extends React.Component {
     );
   }
 
-  board_row(cells) {
-    const cols = cells.slice();
+  board_row(r) {
+    const cols = [];
+    for (let i = 0; i < 3; i++) {
+      cols.push(3 * r + i);
+    }
     return (
-      <div key={cells} className="board-row">
+      <div key={r} className="board-row">
         {cols.map((i) => this.renderSquare(i))}
       </div>
     );
@@ -40,7 +43,7 @@ class Board extends React.Component {
     const row_index = [0,1,2,];
     return (
       <div>
-        {row_index.map((i) => this.board_row([3*i, 3*i+1, 3*i+2,]))}
+        {row_index.map((i) => this.board_row(i))}
       </div>
     );
   }
@@ -90,9 +93,9 @@ class Game extends React.Component {
     if (w) {
       // highlight winning cells
       const w_clrs = this.state.bgColors.slice();
-      w_clrs[w[1]] = 'lightblue';
-      w_clrs[w[2]] = 'lightblue';
-      w_clrs[w[3]] = 'lightblue';
+      for (let i = 0; i < 3; i++) {
+        w_clrs[w[i+1]] = 'lightblue';
+      }
 
       this.setState({
         bgColors: w_clrs,
@@ -166,22 +169,16 @@ class Game extends React.Component {
   }
 }
 
-function rowNum(cell) {
+function rowNum(cellNum) {
   let r = -1;
-  switch (cell) {
-    case 0:
-    case 1:
-    case 2:
+  switch (true) {
+    case -1 < cellNum < 3:
       r = 0;
       break;
-    case 3:
-    case 4:
-    case 5:
+    case 2 < cellNum < 6:
       r = 1;
       break;
-    case 6:
-    case 7:
-    case 8:
+    case 5 < cellNum < 9:
       r = 2;
       break;
     default:
@@ -189,9 +186,9 @@ function rowNum(cell) {
   return r;
 }
 
-function colNum(cell) {
+function colNum(cellNum) {
   let c = -1;
-  switch (cell) {
+  switch (cellNum) {
     case 0:
     case 3:
     case 6:
