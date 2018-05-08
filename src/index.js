@@ -22,7 +22,7 @@ class Board extends React.Component {
         key={i}
         v={this.props.squares[i]}
         clicked={() => this.props.onClick(i)}
-        bgcProp={this.props.bgColor[i]}
+        bgcProp={this.props.bgColorsProp[i]}
       />
     );
   }
@@ -70,9 +70,10 @@ class Game extends React.Component {
     // to read from that step in the history
     const crrt = hstr[this.state.stepNumber];
     const sqrs = crrt.squares.slice(); // no start and end, so copy the whole
-    if (sqrs[i] || gameWon(sqrs)) { // cell is already taken
+    if (sqrs[i] || gameWon(sqrs)) { // donw when cell is already taken or won
       return;
     }
+
     sqrs[i] = this.state.xIsNext ? 'X' : 'O'; // const sqrs but ok to change props
     this.setState({
       history: hstr.concat( // trailing commas allowed
@@ -88,13 +89,13 @@ class Game extends React.Component {
     const w = gameWon(sqrs);
     if (w) {
       // highlight winning cells
-      const clrs = this.state.bgColors.slice();
-      clrs[w[1]] = 'lightblue';
-      clrs[w[2]] = 'lightblue';
-      clrs[w[3]] = 'lightblue';
+      const w_clrs = this.state.bgColors.slice();
+      w_clrs[w[1]] = 'lightblue';
+      w_clrs[w[2]] = 'lightblue';
+      w_clrs[w[3]] = 'lightblue';
 
       this.setState({
-        bgColors: clrs,
+        bgColors: w_clrs,
       });
     }
   }
@@ -152,7 +153,7 @@ class Game extends React.Component {
           <Board
             squares={currt.squares}
             onClick={(i) => this.handleClick(i)}
-            bgColor={this.state.bgColors}
+            bgColorsProp={this.state.bgColors}
           />
         </div>
         <div className="game-info">
