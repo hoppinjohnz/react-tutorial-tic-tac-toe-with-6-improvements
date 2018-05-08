@@ -92,6 +92,7 @@ class Game extends React.Component {
       clrs[w[1]] = 'lightblue';
       clrs[w[2]] = 'lightblue';
       clrs[w[3]] = 'lightblue';
+
       this.setState({
         bgColors: clrs,
       });
@@ -99,10 +100,10 @@ class Game extends React.Component {
   }
 
   jumpTo(i) {
-    console.log(i);
     this.setState({
       stepNumber: i,
       xIsNext: (i % 2) === 0, // even i == true
+      bgColors: Array(9).fill('white'), // to clear the winning highlights
     });
   }
 
