@@ -1,0 +1,31 @@
+{
+  "name": "lifecasot",
+  "version": "0.0.0",
+  "description": "Personal financial life long simulation to figure out the estate wealth",
+  "author": {
+    "name": "John",
+    "email": "johnzhu00@gmail.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1"
+  },
+  "keywords": [
+    "financial",
+    "planning",
+    "simulation",
+    "estate",
+    "wealth",
+    "node",
+    "express",
+    "create-react-app"
+  ]
+}
