@@ -120,7 +120,7 @@ class Game extends React.Component {
 
   componentDidMount() {
     this.callApi()
-      .then(res => this.setState({ response: res.express }))
+      .then(res => this.setState({ response: res.mymsg }))
       .catch(err => console.log(err));
   }
 
