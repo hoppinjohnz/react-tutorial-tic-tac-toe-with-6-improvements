@@ -1,0 +1,2 @@
+to run the entire app including server and clinet from home dir:
+    yarn dev
