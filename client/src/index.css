@@ -49,3 +49,11 @@ ol, ul {
   margin-left: 20px;
   width: 300px;
 }
+
+.App {
+  text-align: center;
+}
+
+.App-intro {
+  font-size: large;
+}
