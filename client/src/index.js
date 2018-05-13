@@ -120,7 +120,11 @@ class Game extends React.Component {
 
   componentDidMount() {
     this.callApi()
-      .then(res => this.setState({ response: res.mymsg }))
+      .then(res => this.setState( { response: [
+                                                res.title,
+                                                res.date,
+                                              ]
+                                  }))
       .catch(err => console.log(err));
   }
 
@@ -186,6 +190,7 @@ class Game extends React.Component {
           <ol>{sortedMoves}</ol>
         </div>
       <div className="App">
+        This is retrived from a remote MongoDB served by mLab.
         <p className="App-intro">{this.state.response}</p>
       </div>
       </div>

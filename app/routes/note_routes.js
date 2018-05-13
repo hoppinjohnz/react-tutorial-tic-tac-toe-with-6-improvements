@@ -11,7 +11,8 @@ module.exports = function (app, db) {
     // When the app receives a post request to the ‘/notes’ path, 
     // it will execute the code inside the callback - passing in a request object 
     // (which contains the parameters or JSON of the request) and a response object (used to reply).
-    // You can test this by using Postman to send a POST request to localhost:8000/notes.
+    // You can test this by using Postman to send a POST request to localhost:5000/notes
+    // or running "curl 'localhost:5000/notes/5af4a1aab9c5193095b6b885' | jq '.'".
     app.post('/notes', (req, res) => {
         const note = { title: req.body.title, body: req.body.body, date: new Date().toString()};
         db.collection('notes').insert(note, (err, result) => {
