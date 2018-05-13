@@ -61,10 +61,10 @@ class Game extends React.Component {
       xIsNext: true,
       isAsc: true,
       bgColors: Array(9).fill('white'),
+      response: '',
     };
     // removed "TypeError: Cannot read property 'setState' of undefined"
     this.handleSort = this.handleSort.bind(this);
-    response: ''
   }
 
   handleClick(i) {
@@ -124,13 +124,13 @@ class Game extends React.Component {
       .catch(err => console.log(err));
   }
 
-  // to interact with our Express API Back-end, then we call this method in componentDidMount and 
+  // to interact with our Express API, we call this method in componentDidMount and 
   // finally set the state to the API response, which will be Hello From Express.
   // Notice we didn’t use a fully qualified URL http://localhost:5000/api/hello
   // to call our API, even though our React app runs on a different port (3000).
   // This is because of the proxy line we added to the package.json file earlier.
   callApi = async () => {
-    const response = await fetch('/api/hello');
+    const response = await fetch('/notes/5af4a1aab9c5193095b6b885');
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);

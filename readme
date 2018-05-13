@@ -1,2 +1,18 @@
+05.13
+curl 'localhost:5000/notes/5af4a1aab9c5193095b6b885' | jq '.'
+=>
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   184  100   184    0     0   4516      0 --:--:-- --:--:-- --:--:--  4600
+{
+  "_id": "5af4a1aab9c5193095b6b885",
+  "body": "value of body is bbbbbbbbbbbbbb, yyyyyyyyyyy",
+  "title": "value of title is ttttttttt, zzzzzzz",
+  "date": "Thu May 10 2018 15:46:50 GMT-0400 (EDT)"
+}
+
+
+server on port 5000
+
 to run the entire app including server and clinet from home dir:
     yarn dev

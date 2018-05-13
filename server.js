@@ -6,6 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const myDb = require('./config/db');
 
+// initialize the server app as an instance of Express
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -22,11 +23,8 @@ MongoClient.connect(myDb.url, (err, database) => {
   // import all the exported routing functions
   require('./app/routes')(app, db);
 
-  app.get('/api/hello', (req, res) => {
-    res.send({ mymsg: 'Sent by Express server!!!' });
-  });
   // to start listening for HTTP requests on port 8000
   app.listen(port, () => {
-    console.log('We are live on ' + port);
+    console.log('API server lives on ' + port);
   });
 })
