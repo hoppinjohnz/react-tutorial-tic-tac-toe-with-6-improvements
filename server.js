@@ -21,7 +21,7 @@ MongoClient.connect(myDb.url, (err, database) => {
   let db = database.db('notes-api-db');
 
   // import all the exported routing functions
-  require('./app/routes')(app, db);
+  require('./routing/routes')(app, db);
 
   // to start listening for HTTP requests on port 8000
   app.listen(port, () => {

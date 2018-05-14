@@ -1,4 +1,4 @@
-// app/routes/note_routes.js
+// routing/routes/note_routes.js
 
 var ObjectID = require('mongodb').ObjectID;
 

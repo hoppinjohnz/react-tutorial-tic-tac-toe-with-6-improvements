@@ -1,4 +1,4 @@
-// app/routes/index.js
+// routing/routes/index.js
 
 // Other route groups could go here, in the future
 const noteRoutes = require('./note_routes');
