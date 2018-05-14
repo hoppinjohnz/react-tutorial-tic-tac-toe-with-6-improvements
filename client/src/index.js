@@ -134,7 +134,7 @@ class Game extends React.Component {
   // to call our API, even though our React app runs on a different port (3000).
   // This is because of the proxy line we added to the package.json file earlier.
   callApi = async () => {
-    const response = await fetch('/notes/5af4a1aab9c5193095b6b885');
+    const response = await fetch('/notes/5af8e69c2f731c67ed0db431');
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);
