@@ -17,13 +17,13 @@ MongoClient.connect(myDb.url, (err, database) => {
     return console.log(err);
   }
 
-  // Make sure you add the database name and not the collection name
+  // add the database name and not the collection name here
   let db = database.db('notes-api-db');
 
-  // import all the exported routing functions
+  // import all the exported routing functions to work with ours
   require('./routing/routes')(app, db);
 
-  // to start listening for HTTP requests on port 8000
+  // to start listening for HTTP requests on port 5000
   app.listen(port, () => {
     console.log('API server lives on ' + port);
   });

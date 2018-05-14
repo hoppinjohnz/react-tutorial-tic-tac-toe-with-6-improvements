@@ -118,6 +118,10 @@ class Game extends React.Component {
     });
   }
 
+  // As per the React specification, the componentDidMount method is called before the
+  // render method and can be used to update the state variables of the app, after the
+  // constructor has run. In this method, you can send the HTTP request to the API Server
+  // for the list of tables and set the tables and selectedTable state variables.
   componentDidMount() {
     this.callApi()
       .then(res => this.setState( { response: [
@@ -129,12 +133,27 @@ class Game extends React.Component {
   }
 
   // to interact with our Express API, we call this method in componentDidMount and 
-  // finally set the state to the API response, which will be Hello From Express.
+  // then set the state to the API response.
   // Notice we didn’t use a fully qualified URL http://localhost:5000/api/hello
   // to call our API, even though our React app runs on a different port (3000).
   // This is because of the proxy line we added to the package.json file earlier.
   callApi = async () => {
+
+    // to get a note out of db
     const response = await fetch('/notes/5af8e69c2f731c67ed0db431');
+
+    // // to post a note to db
+    // const response = await fetch('/notes', { 
+    //   method: 'POST',
+    //   title: 'post to create',
+    //   body: 'my first post/create attempt'
+    // })
+    // .then(function(response) {
+    //   return response.json()
+    // }).then(function(body) {
+    //   console.log(body);
+    // });
+
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);
