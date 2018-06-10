@@ -5,10 +5,13 @@ import './index.css';
 /** React supports a simpler syntax called functional components 
  * for component types like Square that only consist of a render method. 
  * Rather than define a class extending React.Component, we simply write 
- * a function that takes props and returns what should be rendered.*/
+ * a function that takes props and returns what should be rendered.
+ */
 function Square(props) {
   return (
-    <button className="square" onClick={props.clicked} style={{ backgroundColor: props.bgcProp }}>
+    <button className="square" 
+      onClick={props.clicked} 
+      style={{ backgroundColor: props.bgcProp }}>
       {props.v}
     </button>
   );
