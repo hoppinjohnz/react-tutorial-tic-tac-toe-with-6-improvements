@@ -212,7 +212,7 @@ class Game extends React.Component {
           <ol>{sortedMoves}</ol>
         </div>
       <div className="App">
-        This is retrived from a remote MongoDB served by mLab.
+        This is a separate test (testing cloud data store) retriving data from a remote MongoDB served by mLab.
         <p className="App-intro">{this.state.response}</p>
       </div>
       </div>
