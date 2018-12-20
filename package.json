@@ -1,38 +1,24 @@
 {
-  "name": "lifecasot",
-  "version": "0.0.0",
-  "description": "Personal financial life long simulation to figure out the estate wealth",
-  "main": "index.js",
-  "author": {
-    "name": "John",
-    "email": "johnzhu00@gmail.com"
-  },
-  "license": "MIT",
-  "scripts": {
-    "client": "cd client && yarn start",
-    "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
-  },
+  "name": "tic-tac-toe",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "mongodb": "^2.2.16",
     "nodemon": "^1.18.9",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-toggle": "^4.0.2",
+    "react-toggle-button": "^2.2.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.1"
   },
-  "keywords": [
-    "financial",
-    "planning",
-    "simulation",
-    "estate",
-    "wealth",
-    "node",
-    "express",
-    "create-react-app"
-  ]
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "proxy": "http://localhost:5000/"
 }
