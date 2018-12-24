@@ -1,4 +1,10 @@
-## React Tic-Tac-Toe
+# Depracated
+
+This repo has been depracated. See the replacement repo [here](https://github.com/hoppinjohnz/react-generalized-tic-tac-toe.git).
+
+--------------
+
+## react-tutorial-tic-tac-toe-with-6-improvements
 
 This tic-tac-toe game was built by completely following the [Tutorial: Intro to React](https://reactjs.org/tutorial/tutorial.html).
 
@@ -21,4 +27,4 @@ yarn
 yarn dev
 ```
 
-Hit [localhost:3000](http://localhost:3000/) to play the game.
+Hit [localhost:3000](http://localhost:3000/) to play the game if your browser didn't open the game for you.
